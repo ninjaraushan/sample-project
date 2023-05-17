@@ -6,9 +6,10 @@ terraform {
       source  = "hashicorp/azurerm"
       version = "~> 3.0.2"
     }
-  backend "azure" {}
   }
-
+terraform { 
+  backend "azure" {} 
+}
   required_version = ">= 1.1.0"
 }
 data "azurerm_client_config" "current" {
