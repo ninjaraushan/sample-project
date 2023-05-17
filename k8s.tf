@@ -1,5 +1,5 @@
 # Generate random resource group name
-resource "random_pet" "rg_name" {
+resource "test" "rg_name" {
   prefix = var.resource_group_name_prefix
 }
 
