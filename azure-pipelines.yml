@@ -58,7 +58,7 @@ steps:
     containerRegistry: 'ACR-Registry-connection'
     command: build
     Dockerfile: api
- - task: Docker@6
+ - task: Docker@8
   displayName: push
   inputs:
     containerRegistry: 'ACR-Registry-connection'
