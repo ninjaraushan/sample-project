@@ -44,24 +44,24 @@ steps:
 - task: Docker@2
   displayName: build
   inputs:
-    containerRegistry: 'ACR-Registry-connection'
+    containerRegistry: 'Container-Registry-Service-Connection'
     command: build
     Dockerfile: frontend
 - task: Docker@2
   displayName: push
   inputs:
-    containerRegistry: 'ACR-Registry-connection'
+    containerRegistry: 'Container-Registry-Service-Connection'
     command: push
 - task: Docker@2
   displayName: build
   inputs:
-    containerRegistry: 'ACR-Registry-connection'
+    containerRegistry: 'Container-Registry-Service-Connection'
     command: build
     Dockerfile: api
 - task: Docker@2
   displayName: push
   inputs:
-    containerRegistry: 'ACR-Registry-connection'
+    containerRegistry: 'Container-Registry-Service-Connection'
     command: push
     
   
