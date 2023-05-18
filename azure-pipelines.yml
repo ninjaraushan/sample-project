@@ -17,7 +17,7 @@ steps:
   displayName: 'Command Line Script'
   
   
-- task: ms-devlabs.custom-terraform-tasks.custom-terraform-release-task.TerraformTaskV4@4
+- task: ms-devlabs.custom-terraform-tasks.custom-terraform-release-task.TerraformTaskV4@2
   displayName: 'Terraform : azurerm'
   inputs:
     backendServiceArm: 'Avanish-subs'
@@ -27,7 +27,7 @@ steps:
     backendAzureRmKey: tf
     workingDirectory: '$(System.DefaultWorkingDirectory)/terraform'
     
-- task: ms-devlabs.custom-terraform-tasks.custom-terraform-release-task.TerraformTaskV4@4
+- task: ms-devlabs.custom-terraform-tasks.custom-terraform-release-task.TerraformTaskV4@3
   displayName: 'Terraform : plan'
   inputs:
     command: plan
@@ -40,3 +40,28 @@ steps:
     command: apply
     environmentServiceNameAzureRM: 'Avanish-subs'
     workingDirectory: '$(System.DefaultWorkingDirectory)/terraform'
+    
+ - task: Docker@5
+  displayName: build
+  inputs:
+    containerRegistry: 'ACR-Registry-connection'
+    command: build
+    Dockerfile: frontend
+ - task: Docker@6
+  displayName: push
+  inputs:
+    containerRegistry: 'ACR-Registry-connection'
+    command: push
+     - task: Docker@7
+  displayName: build
+  inputs:
+    containerRegistry: 'ACR-Registry-connection'
+    command: build
+    Dockerfile: api
+ - task: Docker@6
+  displayName: push
+  inputs:
+    containerRegistry: 'ACR-Registry-connection'
+    command: push
+    
+  
