@@ -6,7 +6,7 @@ WORKDIR /app
 ENV PATH $PATH:/root/.dotnet/tools
 RUN dotnet tool install -g dotnet-ef --version 6
 COPY . .
-RUN dotnet build
+#RUN dotnet build
 RUN cd InspectionAPI && dotnet-ef migrations add Intialcreate
 RUN cd InspectionAPI && dotnet-ef database update
 RUN dotnet restore "InspectionAPIApp.sln"
@@ -20,8 +20,6 @@ WORKDIR /app
 #COPY --from=build /app/out .
 COPY --from=build /app/published-app /app
 
-EXPOSE 60
-# Optional: Set this here if not setting it from docker-compose.yml
-# ENV ASPNETCORE_ENVIRONMENT Development
+EXPOSE 7240
+
 ENTRYPOINT ["dotnet", "InspectionAPI.dll"]
-#ENTRYPOINT ["dotnet", "Web.dll"]
