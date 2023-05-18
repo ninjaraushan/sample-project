@@ -1,0 +1,43 @@
+# Starter pipeline
+# Start with a minimal pipeline that you can customize to build and deploy your code.
+# Add steps that build, run tests, deploy, and more:
+# https://aka.ms/yaml
+
+trigger:
+- main
+
+pool:
+  vmImage: ubuntu-latest
+
+steps:
+- task: ms-devlabs.custom-terraform-tasks.custom-terraform-installer-task.TerraformInstaller@1
+  displayName: 'Install Terraform latest'
+  workingDirectory: '$(System.DefaultWorkingDirectory)/terraform'
+
+- script: 'ssh-keygen -q -t rsa -N '''' -f ~/.ssh/id_rsa <<<y >/dev/null 2>&1'
+  displayName: 'Command Line Script'
+  
+  
+- task: ms-devlabs.custom-terraform-tasks.custom-terraform-release-task.TerraformTaskV4@4
+  displayName: 'Terraform : azurerm'
+  inputs:
+    backendServiceArm: 'Avanish-subs'
+    backendAzureRmResourceGroupName: 'rg-test'
+    backendAzureRmStorageAccountName: tfstoragecloud
+    backendAzureRmContainerName: tffile
+    backendAzureRmKey: tf
+    workingDirectory: '$(System.DefaultWorkingDirectory)/terraform'
+    
+- task: ms-devlabs.custom-terraform-tasks.custom-terraform-release-task.TerraformTaskV4@4
+  displayName: 'Terraform : plan'
+  inputs:
+    command: plan
+    commandOptions: '-out main.tfplan'
+    environmentServiceNameAzureRM: 'Avanish-subs'
+    workingDirectory: '$(System.DefaultWorkingDirectory)/terraform'
+- task: ms-devlabs.custom-terraform-tasks.custom-terraform-release-task.TerraformTaskV4@4
+  displayName: 'Terraform : apply'
+  inputs:
+    command: apply
+    environmentServiceNameAzureRM: 'Avanish-subs'
+    workingDirectory: '$(System.DefaultWorkingDirectory)/terraform'
