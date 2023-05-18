@@ -6,7 +6,7 @@ WORKDIR /app
 ENV PATH $PATH:/root/.dotnet/tools
 RUN dotnet tool install -g dotnet-ef --version 6
 COPY . .
-#RUN dotnet build
+RUN dotnet build
 RUN cd InspectionAPI && dotnet-ef migrations add Intialcreate
 RUN cd InspectionAPI && dotnet-ef database update
 RUN dotnet restore "InspectionAPIApp.sln"
