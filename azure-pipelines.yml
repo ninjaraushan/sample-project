@@ -12,7 +12,6 @@ pool:
 steps:
 - task: ms-devlabs.custom-terraform-tasks.custom-terraform-installer-task.TerraformInstaller@1
   displayName: 'Install Terraform latest'
-  workingDirectory: '$(System.DefaultWorkingDirectory)/terraform'
 
 - script: 'ssh-keygen -q -t rsa -N '''' -f ~/.ssh/id_rsa <<<y >/dev/null 2>&1'
   displayName: 'Command Line Script'
