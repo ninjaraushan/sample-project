@@ -45,6 +45,7 @@ steps:
   displayName: build
   inputs:
     containerRegistry: 'Container-Registry-Service-Connection'
+    repository: frontend
     command: build
     Dockerfile: frontend/Dockerfile
 - task: Docker@2
@@ -56,6 +57,7 @@ steps:
   displayName: build
   inputs:
     containerRegistry: 'Container-Registry-Service-Connection'
+    repository: api
     command: build
     Dockerfile: api/Dockerfile
 - task: Docker@2
