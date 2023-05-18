@@ -41,24 +41,24 @@ steps:
     environmentServiceNameAzureRM: 'Avanish-subs'
     workingDirectory: '$(System.DefaultWorkingDirectory)/terraform'
     
- - task: Docker@5
+- task: Docker@5
   displayName: build
   inputs:
     containerRegistry: 'ACR-Registry-connection'
     command: build
     Dockerfile: frontend
- - task: Docker@6
+- task: Docker@6
   displayName: push
   inputs:
     containerRegistry: 'ACR-Registry-connection'
     command: push
-     - task: Docker@7
+- task: Docker@7
   displayName: build
   inputs:
     containerRegistry: 'ACR-Registry-connection'
     command: build
     Dockerfile: api
- - task: Docker@8
+- task: Docker@8
   displayName: push
   inputs:
     containerRegistry: 'ACR-Registry-connection'
