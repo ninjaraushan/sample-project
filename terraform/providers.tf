@@ -1,16 +1,13 @@
-
-# Configure the Azure provider
 terraform {
-  backend "azurerm" {} 
+  required_version = ">=0.12"
+
   required_providers {
     azurerm = {
       source  = "hashicorp/azurerm"
-      version = "~> 3.0.2"
+      version = "2.78.0"
     }
   }
-  required_version = ">= 1.1.0"
-}
-data "azurerm_client_config" "current" {
+
 }
 
 provider "azuread" {
@@ -28,6 +25,17 @@ provider "azurerm" {
 
 }
 
-
-
-data "azurerm_subscription" "current" {}
+provider "helm" {
+  kubernetes {
+    host                   = azurerm_kubernetes_cluster.k8s.kube_config.0.host
+    client_certificate     = base64decode(azurerm_kubernetes_cluster.k8s.kube_config.0.client_certificate)
+    client_key             = base64decode(azurerm_kubernetes_cluster.k8s.kube_config.0.client_key)
+    cluster_ca_certificate = base64decode(azurerm_kubernetes_cluster.k8s.kube_config.0.cluster_ca_certificate)
+  }
+}
+provider "kubernetes" {
+    host                   = azurerm_kubernetes_cluster.k8s.kube_config.0.host
+    client_certificate     = base64decode(azurerm_kubernetes_cluster.k8s.kube_config.0.client_certificate)
+    client_key             = base64decode(azurerm_kubernetes_cluster.k8s.kube_config.0.client_key)
+    cluster_ca_certificate = base64decode(azurerm_kubernetes_cluster.k8s.kube_config.0.cluster_ca_certificate)
+}
